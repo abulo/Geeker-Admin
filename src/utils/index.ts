@@ -170,6 +170,17 @@ export function getShowMenuList(menuList: Menu.MenuOptions[]) {
 }
 
 /**
+ * @description 使用递归过滤出需要渲染在左侧菜单的列表 (需剔除 isHide == true 的菜单)
+ * @param menuItem  菜单项
+ * @returns  {Object} 返回处理后的菜单项
+ */
+export function getShowMenuItem(menuItem: Menu.MenuOptions) {
+  let newMenuItem: Menu.MenuOptions = JSON.parse(JSON.stringify(menuItem));
+  newMenuItem.children?.length && (newMenuItem.children = getShowMenuList(newMenuItem.children));
+  return newMenuItem;
+}
+
+/**
  * @description 使用递归找出所有面包屑存储到 pinia/vuex 中
  * @param {Array} menuList 菜单列表
  * @param {Array} parent 父级菜单
@@ -215,6 +226,27 @@ export function findMenuByPath(menuList: Menu.MenuOptions[], path: string): Menu
   return null;
 }
 
+/**
+ * @description 递归查询当前 path 所对应的根节点菜单对象 (该函数暂未使用)
+ * @param {Array} menuList 菜单列表
+ * @param {String} path 当前访问地址
+ * @returns {Object | null}
+ */
+export function findRootMenuByPath(menuList: Menu.MenuOptions[], path: string): Menu.MenuOptions | null {
+  // 根节点菜单
+  let rootMenu: Menu.MenuOptions | null = null;
+  for (const item of menuList) {
+    if (item.path === path) return item;
+    if (item.children) {
+      const res = findRootMenuByPath(item.children, path);
+      if (res) {
+        rootMenu = item;
+        break;
+      }
+    }
+  }
+  return rootMenu;
+}
 /**
  * @description 使用递归过滤需要缓存的菜单 name (该函数暂未使用)
  * @param {Array} menuList 所有菜单列表
@@ -308,4 +340,8 @@ export function findItemNested(enumData: any, callValue: any, value: string, chi
     if (current[value] === callValue) return current;
     if (current[children]) return findItemNested(current[children], callValue, value, children);
   }, null);
+}
+
+export function getOffsetHeight(elem: HTMLElement) {
+  return elem ? elem.offsetHeight : 0;
 }

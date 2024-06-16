@@ -11,11 +11,10 @@
             v-for="item in menuList"
             :key="item.path"
             class="split-item"
-            :class="{ 'split-active': splitActive === item.path || `/${splitActive.split('/')[1]}` === item.path }"
-            @click="changeSubMenu(item)"
-          >
+            :class="{ 'split-active': splitActive === item.path }"
+            @click="changeSubMenu(item)">
             <el-icon>
-              <component :is="item.meta.icon"></component>
+              <component :is="item.meta.icon" />
             </el-icon>
             <span class="title">{{ item.meta.title }}</span>
           </div>
@@ -32,8 +31,7 @@
           :default-active="activeMenu"
           :collapse="isCollapse"
           :unique-opened="accordion"
-          :collapse-transition="false"
-        >
+          :collapse-transition="false">
           <SubMenu :menu-list="subMenuList" />
         </el-menu>
       </el-scrollbar>
@@ -57,7 +55,7 @@ import Main from "@/layouts/components/Main/index.vue";
 import ToolBarLeft from "@/layouts/components/Header/ToolBarLeft.vue";
 import ToolBarRight from "@/layouts/components/Header/ToolBarRight.vue";
 import SubMenu from "@/layouts/components/Menu/SubMenu.vue";
-
+import { findRootMenuByPath, getShowMenuItem } from "@/utils/index";
 const title = import.meta.env.VITE_GLOB_APP_TITLE;
 
 const route = useRoute();
@@ -70,17 +68,39 @@ const menuList = computed(() => authStore.showMenuListGet);
 const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu : route.path) as string);
 
 const subMenuList = ref<Menu.MenuOptions[]>([]);
-const splitActive = ref("");
+const splitActive = ref();
+
+const getRoutePath = () => {
+  let path = route.path;
+  const name = route.name;
+  if (route.matched.length > 0) {
+    for (let index = 0; index < route.matched.length; index++) {
+      const element = route.matched[index];
+      if (element.name == name) {
+        path = element.path;
+        break;
+      }
+    }
+  }
+  return path;
+};
+
+const getActiveHeaderMenu = () => {
+  const path = getRoutePath();
+  const menuItem = findRootMenuByPath(authStore.authMenuList, path);
+  return menuItem?.path || "";
+};
+
 watch(
   () => [menuList, route],
   () => {
     // 当前菜单没有数据直接 return
     if (!menuList.value.length) return;
-    splitActive.value = route.path;
-    const menuItem = menuList.value.filter((item: Menu.MenuOptions) => {
-      return route.path === item.path || `/${route.path.split("/")[1]}` === item.path;
-    });
-    if (menuItem[0].children?.length) return (subMenuList.value = menuItem[0].children);
+    splitActive.value = getActiveHeaderMenu();
+    const path = getRoutePath();
+    // const menuItem = findRootMenuByPath(menuList.value, route.path);
+    const menuItem = getShowMenuItem(findRootMenuByPath(authStore.authMenuList, path) as Menu.MenuOptions);
+    if (menuItem?.children?.length) return (subMenuList.value = menuItem.children);
     subMenuList.value = [];
   },
   {
@@ -91,8 +111,8 @@ watch(
 
 // change SubMenu
 const changeSubMenu = (item: Menu.MenuOptions) => {
-  splitActive.value = item.path;
-  if (item.children?.length) return (subMenuList.value = item.children);
+  splitActive.value = findRootMenuByPath(menuList.value, item.path);
+  if (item?.children?.length) return (subMenuList.value = item.children);
   subMenuList.value = [];
   router.push(item.path);
 };
