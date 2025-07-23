@@ -16,6 +16,7 @@
         ref="proTableRef"
         highlight-current-row
         :columns="columns"
+        :toolbar-middle="toolbarMiddle"
         :request-api="UserAPI.getUserList"
         :init-param="Object.assign(treeFilterValues, selectFilterValues)"
       >
@@ -27,22 +28,40 @@
         </template>
         <!-- 表格操作 -->
         <template #operation="scope">
-          <el-button type="primary" link :icon="View" @click="openDrawer('查看', scope.row)"> 查看 </el-button>
-          <el-button type="primary" link :icon="EditPen" @click="openDrawer('编辑', scope.row)"> 编辑 </el-button>
-          <el-button type="primary" link :icon="Refresh" @click="resetPass(scope.row)"> 重置密码 </el-button>
-          <el-button type="primary" link :icon="Delete" @click="deleteAccount(scope.row)"> 删除 </el-button>
+          <el-button type="primary" link :icon="View" @click="openDrawer('查看', scope.row)">
+            {{ t('common.view') }}
+          </el-button>
+          <el-button type="primary" link :icon="EditPen" @click="openDrawer('编辑', scope.row)">
+            {{ t('common.edit') }}
+          </el-button>
+          <el-button type="primary" link :icon="Refresh" @click="resetPass(scope.row)">
+            {{ t('common.resetPassword') }}
+          </el-button>
+          <el-button type="primary" link :icon="Delete" @click="deleteAccount(scope.row)">
+            {{ t('common.delete') }}
+          </el-button>
         </template>
       </pro-table>
       <user-drawer ref="drawerRef" />
       <import-excel ref="dialogRef" />
+      <el-dialog v-model="functionDialogVisible" title="功能说明" width="30%">
+        <h3>本页面演示了 ProTable 组件的以下功能：</h3>
+        <ul>
+          <li>1. 表格支持多选、单选、全选、反选、全不选</li>
+          <li>2. 表格支持排序、过滤、分页、导出、导入</li>
+          <li>3. 表格支持自定义列、自定义列宽、自定义列排序、自定义列过滤、自定义列导出、自定义列导入</li>
+          <li>4. 表格支持自定义列、自定义列宽、自定义列排序、自定义列过滤、自定义列导出、自定义列导入</li>
+          <li>5. 表格支持自定义列、自定义列宽、自定义列排序、自定义列过滤、自定义列导出、自定义列导入</li>
+        </ul>
+      </el-dialog>
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script setup lang="tsx">
 defineOptions({ name: 'UseSelectFilter' })
 import { ref, reactive, onMounted, watch, computed } from 'vue'
 import type { ResUserList } from '@/api/system/user'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElButton } from 'element-plus'
 import { useHandleData } from '@/hooks/useHandleData'
 import { genderType, userStatus } from '@/utils/dict'
 import TreeFilter from '@/components/TreeFilter/index.vue'
@@ -50,12 +69,14 @@ import ImportExcel from '@/components/ImportExcel/index.vue'
 import UserDrawer from '@/views/proTable/components/UserDrawer.vue'
 import SelectFilter from '@/components/SelectFilter/index.vue'
 import type { ProTableInstance, ColumnProps } from '@/components/ProTable/interface'
-import { CirclePlus, Delete, EditPen, Pointer, Upload, View, Refresh } from '@element-plus/icons-vue'
+import { CirclePlus, Delete, EditPen, Pointer, Upload, View, Refresh, InfoFilled } from '@element-plus/icons-vue'
 import { UserAPI } from '@/api/system/user'
 import { useI18n } from 'vue-i18n'
 
 // ProTable 实例
 const proTableRef = ref<ProTableInstance>()
+
+const functionDialogVisible = ref(false)
 
 const { t } = useI18n()
 
@@ -71,15 +92,20 @@ const columns = ref<ColumnProps<ResUserList>[]>([
   {
     prop: 'status',
     label: computed(() => t('common.userStatus')),
-    width: 120,
+    width: 150,
     sortable: true,
     tag: true,
     enum: userStatus,
   },
   { prop: 'createTime', label: computed(() => t('common.createTime')), width: 180, sortable: true },
-  { prop: 'operation', label: computed(() => t('common.operation')), width: 330, fixed: 'right' },
+  { prop: 'operation', label: computed(() => t('common.operation')), width: 310, fixed: 'right' },
 ])
 
+const toolbarMiddle = () => (
+  <ElButton type={'primary'} icon={InfoFilled} onClick={() => (functionDialogVisible.value = true)}>
+    功能说明
+  </ElButton>
+)
 // selectFilter 数据（用户角色为后台数据）
 const selectFilterData = reactive([
   {

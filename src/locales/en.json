@@ -1,56 +1,57 @@
 {
   "common": {
-    "search": "Search",
-    "reset": "Reset",
+    "add": "Add",
+    "address": "Address",
     "collapse": "Collapse",
+    "createTime": "Create time",
+    "delete": "Delete",
+    "edit": "Edit",
+    "email": "Email",
     "expand": "Expand",
     "export": "Export",
-    "refresh": "Refresh",
-    "layout": "Layout",
-    "add": "Add",
-    "delete": "Delete",
-    "import": "Import",
-    "submit": "Submit",
-    "operations": "Operations",
     "gender": "Gender",
-    "userStatus": "User Status",
-    "radio": "Radio",
+    "idCard": "ID card",
+    "import": "Import",
     "index": "#",
+    "layout": "Layout",
     "operation": "Operation",
-    "username": "Username",
-    "idCard": "ID Card",
-    "email": "Email",
-    "address": "Address",
-    "createTime": "Create Time",
+    "operations": "Operations",
+    "radio": "Radio",
+    "refresh": "Refresh",
+    "reset": "Reset",
+    "resetPassword": "Reset password",
+    "search": "Search",
     "status": "Status",
-    "title": "Title"
+    "submit": "Submit",
+    "title": "Title",
+    "userStatus": "User status",
+    "username": "Username",
+    "view": "View"
+  },
+  "components": {
+    "proTable": {}
+  },
+  "error": {
+    "localeNotSupported": "Localization language [{locale}] is not supported, please check `src/locales/index.ts`",
+    "tableDataShouldBeArray": "The table data should be an array, the current type is incorrect"
+  },
+  "header": {
+    "changePassword": "Change password",
+    "componentSize": "Component size",
+    "darkMode": "Dark mode",
+    "exitFullScreen": "Exit full screen",
+    "fullScreen": "Full screen",
+    "greyMode": "Grey mode",
+    "language": "Language",
+    "layoutConfig": "Layout config",
+    "logout": "Logout",
+    "personalData": "Personal Data",
+    "primary": "Primary",
+    "theme": "Theme",
+    "weakMode": "Weak mode"
   },
   "home": {
     "welcome": "Welcome"
-  },
-  "tabs": {
-    "refresh": "Refresh",
-    "maximize": "Maximize",
-    "closeCurrent": "Close current",
-    "closeLeft": "Close Left",
-    "closeRight": "Close Right",
-    "closeOther": "Close other",
-    "closeAll": "Close All"
-  },
-  "header": {
-    "componentSize": "Component size",
-    "language": "Language",
-    "theme": "theme",
-    "layoutConfig": "Layout config",
-    "primary": "primary",
-    "darkMode": "Dark Mode",
-    "greyMode": "Grey mode",
-    "weakMode": "Weak mode",
-    "fullScreen": "Full Screen",
-    "exitFullScreen": "Exit Full Screen",
-    "personalData": "Personal Data",
-    "changePassword": "Change Password",
-    "logout": "Logout"
   },
   "system": {
     "dictManage": {
@@ -60,7 +61,13 @@
       "status": "Status"
     }
   },
-  "components": {
-    "proTable": {}
+  "tabs": {
+    "closeAll": "Close all",
+    "closeCurrent": "Close current",
+    "closeLeft": "Close left",
+    "closeOther": "Close other",
+    "closeRight": "Close right",
+    "maximize": "Maximize",
+    "refresh": "Refresh"
   }
 }
