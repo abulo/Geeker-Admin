@@ -131,6 +131,9 @@ export default [
         ecmaVersion: 'latest',
         sourceType: 'module',
         extraFileExtensions: ['.vue'],
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
     },
   },

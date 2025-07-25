@@ -40,8 +40,8 @@ const getTableConfig = ({
   deleteAccount: (_row: ResUserList) => void
   openFunctionDialog: () => void
 }): ProTableProps<ReqUserParams, ResUserList> => {
-  return reactive({
-    columns: [
+  return {
+    columns: reactive([
       { type: 'selection', fixed: 'left', width: 70 },
       { type: 'sort', label: 'Sort', width: 80 },
       { type: 'expand', label: 'Expand', width: 85 },
@@ -144,7 +144,7 @@ const getTableConfig = ({
           )
         },
       },
-    ],
+    ]),
     toolbarLeft: [
       { auth: 'add', name: 'add', text: '新增用户', icon: 'CirclePlus', type: 'primary' },
       { auth: 'batchAdd', name: 'batchAdd', text: '批量添加用户', icon: 'Upload', type: 'primary' },
@@ -168,7 +168,7 @@ const getTableConfig = ({
         功能说明
       </ElButton>
     ),
-  })
+  }
 }
 
 export default getTableConfig
