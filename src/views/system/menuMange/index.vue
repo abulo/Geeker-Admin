@@ -2,15 +2,15 @@
   <div class="table-box">
     <ProTable
       ref="proTable"
-      page-auth-id="system:menu-manage"
       title="菜单列表"
       row-key="path"
       :indent="20"
       :columns="columns"
-      :data="menuData"
+      :pagination="ProTablePaginationEnum.NONE"
+      :request-api="menuData"
     >
       <!-- 表格 header 按钮 -->
-      <template #tableHeader>
+      <template #toolbarLeft>
         <ElButton type="primary" :icon="CirclePlus"> 新增菜单 </ElButton>
       </template>
       <!-- 菜单图标 -->
@@ -35,10 +35,11 @@ import type { ColumnProps } from '@/components/ProTable/interface'
 import { Delete, EditPen, CirclePlus } from '@element-plus/icons-vue'
 import authMenuList from '@/assets/json/authMenuList.json'
 import ProTable from '@/components/ProTable/index.vue'
+import { ProTablePaginationEnum } from '@/enums'
 
 const proTable = ref()
 
-const menuData = ref(authMenuList.data)
+const menuData = () => Promise.resolve(authMenuList.data)
 
 // 表格配置项
 const columns: ColumnProps[] = [

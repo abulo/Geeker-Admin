@@ -32,6 +32,7 @@
     "proTable": {}
   },
   "error": {
+    "fePaginationFilterMethodIsRequired": "fePaginationFilterMethod is a necessary parameter when paging in front-end.",
     "localeNotSupported": "Localization language [{locale}] is not supported, please check `src/locales/index.ts`",
     "tableDataShouldBeArray": "The table data should be an array, the current type is incorrect"
   },

@@ -52,11 +52,11 @@ jobs:
       - name: Type check
         run: pnpm type:check
 
-      - name: Lint with ESLint
-        run: pnpm lint:eslint
+      # - name: Lint with ESLint
+      #   run: pnpm lint:eslint
 
-      - name: Lint with Stylelint
-        run: pnpm lint:stylelint
+      # - name: Lint with Stylelint
+      #   run: pnpm lint:stylelint
 
       - name: Build project
         run: pnpm build

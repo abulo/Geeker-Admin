@@ -49,10 +49,9 @@ export function getConfig(): ProTableProps<DictQuery, DictListItem> {
     ],
     initParam: {},
     requestApi: DictAPI.getDictList,
-    pagination: true,
     toolbarLeft: ['add', 'delete'],
     toolbarRight: ['refresh', 'layout', 'search'],
-    toolbarMiddle: <span>本页面是随机 mock 数据，跟常用组件里的 dict 数据没有关系</span>,
+    toolbarMiddle: () => <span>本页面是随机 mock 数据，跟常用组件里的 dict 数据没有关系</span>,
     searchCol: { xs: 1, sm: 2, md: 2, lg: 3, xl: 4 },
     title: '字典管理',
   }

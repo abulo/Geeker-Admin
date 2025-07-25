@@ -1,6 +1,6 @@
 <template>
   <div v-if="columns.length" class="card table-search">
-    <el-form ref="formRef" :model="localSearchParam">
+    <el-form ref="formRef" :model="searchParam">
       <grid ref="gridRef" :collapsed="collapsed" :gap="[20, 0]" :cols="searchCol">
         <grid-item v-for="(item, index) in columns" :key="item.prop" v-bind="getResponsive(item)" :index="index">
           <el-form-item>
@@ -13,7 +13,7 @@
               </el-space>
               <span>&nbsp;:</span>
             </template>
-            <search-form-item :column="item" :search-param="localSearchParam" />
+            <search-form-item :column="item" :search-param="searchParam" />
           </el-form-item>
         </grid-item>
         <grid-item suffix>
@@ -34,7 +34,6 @@
 </template>
 <script setup lang="ts">
 defineOptions({ name: 'SearchForm' })
-import { computed, ref, watch } from 'vue'
 import type { ColumnProps } from '@/components/ProTable/interface'
 import type { BreakPoint } from '@/components/Grid/interface'
 import { Delete, Search, ArrowDown, ArrowUp } from '@element-plus/icons-vue'
@@ -70,26 +69,6 @@ const getResponsive = (item: ColumnProps) => {
   }
 }
 
-const localSearchParam = ref<IObject>({})
-
-watch(
-  props.searchParam,
-  newVal => {
-    localSearchParam.value = newVal
-  },
-  {
-    immediate: true,
-    deep: true,
-  }
-)
-
-const setSearchParamForm = (key: string, value: any) => {
-  if (localSearchParam.value[key]) {
-    localSearchParam.value[key] = value
-  } else {
-    throw new Error(`ProTable 搜索参数 ${key} 不存在，只能设置已初始化的参数`)
-  }
-}
 // 是否默认折叠搜索项
 const collapsed = ref(true)
 
@@ -117,6 +96,4 @@ const showCollapse = computed(() => {
   }, 0)
   return show
 })
-
-defineExpose({ setSearchParamForm })
 </script>

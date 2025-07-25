@@ -64,7 +64,7 @@
       v-bind="$attrs"
       :id="pageId"
       ref="tableRef"
-      :data="processTableData"
+      :data="tableData"
       :border="border"
       :row-key="rowKey"
       @selection-change="selectionChange"
@@ -98,7 +98,6 @@
         </el-table-column>
         <!-- other -->
         <table-column v-else :column="{ ...item, label: unref(label) }">
-          <!-- @ts-ignore -->
           <template v-for="slotName in Object.keys($slots)" #[slotName]="scope">
             <slot :name="slotName" v-bind="scope"></slot>
           </template>
@@ -121,7 +120,7 @@
     <!-- 分页组件 -->
     <slot name="pagination">
       <pagination
-        v-if="pagination"
+        v-if="pagination !== ProTablePaginationEnum.NONE"
         :pageable="pageable"
         :handle-size-change="handleSizeChange"
         :handle-current-change="handleCurrentChange"
@@ -150,12 +149,14 @@ import TableColumn from './components/TableColumn'
 import Sortable from 'sortablejs'
 import { toolbarButtonsConfig } from '@/utils/proTable'
 import { Operation } from '@element-plus/icons-vue'
+import { ProTablePaginationEnum } from '@/enums'
+import { useI18n } from 'vue-i18n'
 
 // 接受父组件参数，配置默认值
 const props = withDefaults(defineProps<ProTableProps>(), {
   columns: () => [],
   requestAuto: true,
-  pagination: true,
+  pagination: ProTablePaginationEnum.BE,
   initParam: () => ({}),
   border: true,
   rowKey: 'id',
@@ -184,6 +185,8 @@ const exportModal = ref({
   title: '导出',
   type: 'export',
 })
+
+const { t } = useI18n()
 
 // 搜索表单实例
 const searchFormRef = ref<InstanceType<typeof SearchForm>>()
@@ -258,7 +261,7 @@ const {
   reset,
   handleSizeChange,
   handleCurrentChange,
-} = useTable(props.requestApi, props.initParam, props.pagination, props.dataCallback)
+} = useTable(props.requestApi, props.initParam, props.pagination, t, props.fePaginationFilterMethod, props.dataCallback)
 
 // 清空选中数据列表
 const clearSelection = () => tableRef.value!.clearSelection()
@@ -267,21 +270,6 @@ const clearSelection = () => tableRef.value!.clearSelection()
 onMounted(() => {
   dragSort()
   props.requestAuto && getTableList()
-  props.data && (pageable.value.total = props.data.length)
-})
-
-// 处理表格数据
-const processTableData = computed(() => {
-  if (!props.data) {
-    return tableData.value
-  }
-  if (!props.pagination) {
-    return props.data
-  }
-  return props.data.slice(
-    (pageable.value.pageNum - 1) * pageable.value.pageSize,
-    pageable.value.pageSize * pageable.value.pageNum
-  )
 })
 
 // 监听页面 initParam 改化，重新获取表格数据
@@ -363,7 +351,6 @@ searchColumns.value?.forEach((column, index) => {
 })
 
 const setSearchParamForm = (key: string, value: any) => {
-  searchFormRef.value?.setSearchParamForm(key, value)
   searchParam.value[key] = value
 }
 
@@ -400,8 +387,8 @@ const dragSort = () => {
     handle: '.move',
     animation: 300,
     onEnd({ newIndex, oldIndex }) {
-      const [removedItem] = processTableData.value.splice(oldIndex!, 1)
-      processTableData.value.splice(newIndex!, 0, removedItem)
+      const [removedItem] = tableData.value.splice(oldIndex!, 1)
+      tableData.value.splice(newIndex!, 0, removedItem)
       emit('dragSort', { newIndex, oldIndex })
     },
   })
@@ -410,7 +397,7 @@ const dragSort = () => {
 // 暴露给父组件的参数和方法
 defineExpose({
   element: tableRef,
-  tableData: processTableData,
+  tableData,
   radio,
   pageable,
   searchParam,

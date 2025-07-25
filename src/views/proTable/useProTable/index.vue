@@ -2,7 +2,7 @@
   <div class="table-box">
     <ProTable ref="proTable" v-bind="tableConfig" @drag-sort="sortTable" @toolbar-click="toolbarClickHandler">
       <!-- 表格 header 按钮 -->
-      <template #toolbarLeft="scope">
+      <!-- <template #toolbarLeft="scope">
         <el-button v-auth="'add'" type="primary" :icon="CirclePlus" @click="openDrawer('新增')">新增用户</el-button>
         <el-button v-auth="'batchAdd'" type="primary" :icon="Upload" plain @click="batchAdd">批量添加用户</el-button>
         <el-button v-auth="'export'" type="primary" :icon="Download" plain @click="downloadFile">
@@ -25,7 +25,7 @@
         >
           批量删除用户
         </el-button>
-      </template>
+      </template> -->
       <!-- Expand -->
       <template #expand="scope">
         {{ scope.row }}
@@ -42,21 +42,28 @@
           {{ scope.row.createTime }}
         </el-button>
       </template>
-      <!-- 表格操作 -->
-      <template #operation="scope">
-        <el-button type="primary" link :icon="View" @click="openDrawer('查看', scope.row)">查看</el-button>
-        <el-button type="primary" link :icon="EditPen" @click="openDrawer('编辑', scope.row)">编辑</el-button>
-        <el-button type="primary" link :icon="Refresh" @click="resetPass(scope.row)">重置密码</el-button>
-        <el-button type="primary" link :icon="Delete" @click="deleteAccount(scope.row)">删除</el-button>
-      </template>
     </ProTable>
     <UserDrawer ref="drawerRef" />
     <ImportExcel ref="dialogRef" />
+    <el-dialog v-model="functionDialogVisible" title="功能说明" width="30%">
+      <h3>本页面演示了 ProTable 组件的以下功能：</h3>
+      <ul>
+        <li>1. 使用 单独文件 `config.tsx` 配置表格</li>
+        <li>2. 使用 config.tsx 配置表格的 toolbarLeft 和 toolbarRight</li>
+        <li>
+          3. 使用 config.tsx 配置和 slot 渲染表格的 表头和表格内容。用户姓名表头是 slots 插槽，表格内容是 render
+          插槽，创建时间表头是 headerRender 插槽，表格内容是 slot 插槽
+        </li>
+        <li>
+          4. 注意，本示例中，为了演示选中行之后修改 toolbar
+          按钮的状态，代码非常复杂，且可读性很差。所以，请根据项目需求，选择更适合的方式渲染表格。
+        </li>
+      </ul>
+    </el-dialog>
   </div>
 </template>
 
 <script setup lang="tsx" name="useProTable">
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { type ResUserList } from '@/api/system/user'
 import { useHandleData } from '@/hooks/useHandleData'
@@ -67,9 +74,10 @@ import ProTable from '@/components/ProTable/index.vue'
 import ImportExcel from '@/components/ImportExcel/index.vue'
 import UserDrawer from '@/views/proTable/components/UserDrawer.vue'
 import type { ProTableInstance } from '@/components/ProTable/interface'
-import { CirclePlus, Delete, EditPen, Download, Upload, View, Refresh } from '@element-plus/icons-vue'
 import { UserAPI } from '@/api/system/user'
 import getTableConfig from './config'
+
+const functionDialogVisible = ref(false)
 
 const router = useRouter()
 
@@ -154,9 +162,36 @@ const openDrawer = (title: string, row: Partial<ResUserList> = {}) => {
   drawerRef.value?.acceptParams(params)
 }
 
+const openFunctionDialog = () => {
+  functionDialogVisible.value = true
+}
+
 const tableConfig = getTableConfig({
   changeStatusHandler,
+  openDrawer,
+  resetPass,
+  deleteAccount,
+  openFunctionDialog,
 })
+
+watch(
+  () => proTable.value?.selectedListIds,
+  () => {
+    const selectedListIdsEmpty = !proTable.value?.selectedListIds || proTable.value?.selectedListIds?.length === 0
+    const toDetailItem = tableConfig.toolbarLeft!.find(item => typeof item === 'object' && item.name === 'toDetail')
+    if (toDetailItem && typeof toDetailItem === 'object' && toDetailItem.attrs) {
+      // 由于 attrs.disabled 是只读属性，不能直接赋值，需整体替换 attrs
+      toDetailItem.attrs = { ...toDetailItem.attrs, disabled: selectedListIdsEmpty }
+    }
+    const batchDeleteItem = tableConfig.toolbarLeft!.find(
+      item => typeof item === 'object' && item.name === 'batchDelete'
+    )
+    if (batchDeleteItem && typeof batchDeleteItem === 'object' && batchDeleteItem.attrs) {
+      // 由于 attrs.disabled 是只读属性，不能直接赋值，需整体替换 attrs
+      batchDeleteItem.attrs = { ...batchDeleteItem.attrs, disabled: selectedListIdsEmpty }
+    }
+  }
+)
 
 const toolbarClickHandler = ({ name }) => {
   if (name === 'add') {
@@ -165,6 +200,10 @@ const toolbarClickHandler = ({ name }) => {
     batchAdd()
   } else if (name === 'export') {
     downloadFile()
+  } else if (name === 'toDetail') {
+    toDetail(proTable.value?.selectedListIds || [])
+  } else if (name === 'batchDelete') {
+    batchDelete(proTable.value?.selectedListIds || [])
   }
 }
 </script>

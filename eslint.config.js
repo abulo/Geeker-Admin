@@ -126,6 +126,7 @@ export default [
     languageOptions: {
       parser: eslintPluginVue.parser,
       parserOptions: {
+        jsx: true,
         parser: typescriptEslint.parser,
         ecmaVersion: 'latest',
         sourceType: 'module',

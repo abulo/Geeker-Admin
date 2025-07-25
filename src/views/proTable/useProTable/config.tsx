@@ -4,6 +4,7 @@ import type { ReqUserParams } from '@/api/system/user'
 import { type ResUserList, UserAPI } from '@/api/system/user'
 import type { HeaderRenderScope, ProTableProps } from '@/components/ProTable/interface'
 import { useAuthStore } from '@/stores/modules/auth'
+import { Delete, EditPen, View, Refresh, InfoFilled } from '@element-plus/icons-vue'
 
 const authStore = useAuthStore()
 const BUTTONS = computed(() => authStore.authButtonList)
@@ -28,10 +29,18 @@ const getTableList = (params: { createTime?: string[] } & ReqUserParams) => {
 
 const getTableConfig = ({
   changeStatusHandler,
+  openDrawer,
+  resetPass,
+  deleteAccount,
+  openFunctionDialog,
 }: {
   changeStatusHandler: (_row: ResUserList) => Promise<void>
+  openDrawer: (_title: string, _row: ResUserList) => void
+  resetPass: (_row: ResUserList) => void
+  deleteAccount: (_row: ResUserList) => void
+  openFunctionDialog: () => void
 }): ProTableProps<ReqUserParams, ResUserList> => {
-  return {
+  return reactive({
     columns: [
       { type: 'selection', fixed: 'left', width: 70 },
       { type: 'sort', label: 'Sort', width: 80 },
@@ -110,18 +119,56 @@ const getTableConfig = ({
           )
         },
       },
-      { prop: 'operation', label: '操作', fixed: 'right', width: 330 },
+      {
+        prop: 'operation',
+        label: '操作',
+        fixed: 'right',
+        width: 330,
+        render: scope => {
+          // 也可以使用数组的方式，但是要注意不要缺少了 key 属性
+          return (
+            <>
+              <ElButton type="primary" link={true} icon={View} onClick={() => openDrawer('查看', scope.row)}>
+                查看
+              </ElButton>
+              <ElButton type="primary" link={true} icon={EditPen} onClick={() => openDrawer('编辑', scope.row)}>
+                编辑
+              </ElButton>
+              <ElButton type="primary" link={true} icon={Refresh} onClick={() => resetPass(scope.row)}>
+                重置密码
+              </ElButton>
+              <ElButton type="primary" link={true} icon={Delete} onClick={() => deleteAccount(scope.row)}>
+                删除
+              </ElButton>
+            </>
+          )
+        },
+      },
     ],
-    // toolbarLeft: [
-    //   'add',
-    //   { auth: 'batchAdd', name: 'batchAdd', text: '批量添加用户', icon: 'Upload', type: 'primary' },
-    //   'delete',
-    // ],
+    toolbarLeft: [
+      { auth: 'add', name: 'add', text: '新增用户', icon: 'CirclePlus', type: 'primary' },
+      { auth: 'batchAdd', name: 'batchAdd', text: '批量添加用户', icon: 'Upload', type: 'primary' },
+      { auth: 'export', name: 'export', text: '导出用户数据', icon: 'Download', type: 'primary' },
+      { auth: 'toDetail', name: 'toDetail', text: 'To 子集详情页面', type: 'primary', attrs: { disabled: true } },
+      {
+        auth: 'batchDelete',
+        name: 'batchDelete',
+        text: '批量删除用户',
+        icon: 'Delete',
+        type: 'danger',
+        attrs: { disabled: true },
+      },
+    ],
     toolbarRight: ['search', 'export', 'refresh', 'layout'],
     requestApi: getTableList,
-    initParam: reactive({ status: 1 }),
-    toolbarMiddle: <ElButton onClick={() => ElMessage.success('自定义中间按钮')}>自定义中间按钮</ElButton>,
-  }
+    initParam: { status: 1 },
+    toolbarMiddle: () => (
+      <ElButton onClick={() => openFunctionDialog()}>
+        <InfoFilled />
+        功能说明
+      </ElButton>
+    ),
+  })
 }
 
 export default getTableConfig

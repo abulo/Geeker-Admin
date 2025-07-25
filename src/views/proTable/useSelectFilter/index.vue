@@ -47,11 +47,10 @@
       <el-dialog v-model="functionDialogVisible" title="功能说明" width="30%">
         <h3>本页面演示了 ProTable 组件的以下功能：</h3>
         <ul>
-          <li>1. 表格支持多选、单选、全选、反选、全不选</li>
-          <li>2. 表格支持排序、过滤、分页、导出、导入</li>
-          <li>3. 表格支持自定义列、自定义列宽、自定义列排序、自定义列过滤、自定义列导出、自定义列导入</li>
-          <li>4. 表格支持自定义列、自定义列宽、自定义列排序、自定义列过滤、自定义列导出、自定义列导入</li>
-          <li>5. 表格支持自定义列、自定义列宽、自定义列排序、自定义列过滤、自定义列导出、自定义列导入</li>
+          <li>1. 语言切换</li>
+          <li>2. tsx 渲染插槽</li>
+          <li>3. 特殊的表单</li>
+          <li>4. 代码选定指定行</li>
         </ul>
       </el-dialog>
     </div>
@@ -59,7 +58,6 @@
 </template>
 <script setup lang="tsx">
 defineOptions({ name: 'UseSelectFilter' })
-import { ref, reactive, onMounted, watch, computed } from 'vue'
 import type { ResUserList } from '@/api/system/user'
 import { ElMessage, ElButton } from 'element-plus'
 import { useHandleData } from '@/hooks/useHandleData'
@@ -98,7 +96,7 @@ const columns = ref<ColumnProps<ResUserList>[]>([
     enum: userStatus,
   },
   { prop: 'createTime', label: computed(() => t('common.createTime')), width: 180, sortable: true },
-  { prop: 'operation', label: computed(() => t('common.operation')), width: 310, fixed: 'right' },
+  { prop: 'operation', label: computed(() => t('common.operations')), width: 410, fixed: 'right' },
 ])
 
 const toolbarMiddle = () => (

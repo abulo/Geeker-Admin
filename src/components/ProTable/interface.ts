@@ -5,6 +5,8 @@ import type ProTable from '@/components/ProTable/index.vue'
 import type { ColProps, DialogProps, DrawerProps, ButtonProps, FormItemRule, FormProps } from 'element-plus'
 import type { MaybeRef } from 'vue'
 import type { DefaultRow } from 'element-plus/es/components/table/src/table/defaults.mjs'
+import type { ProTablePaginationEnum } from '@/enums'
+import type { JSX } from 'vue/jsx-runtime'
 
 export interface EnumProps {
   label?: string // 选项框显示的文字
@@ -80,15 +82,16 @@ export interface ColumnProps<T extends DefaultRow = any>
   enum?: EnumProps[] | Ref<EnumProps[]> | ((_params?: any) => Promise<any>) // 枚举字典
   isFilterEnum?: boolean | Ref<boolean> // 当前单元格值是否根据 enum 格式化（示例：enum 只作为搜索项数据）
   fieldNames?: FieldNamesProps // 指定 label && value && children 的 key 值
-  headerRender?: (_scope: HeaderRenderScope<T>) => VNode // 自定义表头内容渲染（tsx语法）
-  render?: (_scope: RenderScope<T>) => VNode | string // 自定义单元格内容渲染（tsx语法）
+  headerRender?: (_scope: HeaderRenderScope<T>) => VNode | string | JSX.Element | JSX.Element[] // 自定义表头内容渲染（tsx语法）
+  render?: (_scope: RenderScope<T>) => VNode | string | JSX.Element | JSX.Element[] // 自定义单元格内容渲染（tsx语法）
   children?: ColumnProps<T>[] // 多级表头
   label?: MaybeRef<string>
 }
 
 export type ProTableInstance = Omit<InstanceType<typeof ProTable>, keyof ComponentPublicInstance | keyof ProTableProps>
+export type RequestApiReturnType<I, P> = P extends ProTablePaginationEnum.BE ? Promise<ResultPage<I>> : Promise<I[]>
 
-export interface ProTableProps<Q = any, I extends DefaultRow = any, Extra = IObject> {
+export interface ProTableProps<Query = any, Item extends DefaultRow = any, ExtraQuery = IObject> {
   loading?: boolean // 表格是否加载中 ==> 非必传（默认为false）
   // 表格工具栏(默认支持add,delete,export,也可自定义)
   toolbarLeft?: Array<
@@ -101,7 +104,7 @@ export interface ProTableProps<Q = any, I extends DefaultRow = any, Extra = IObj
         name: string
         text: string
         type: ButtonProps['type']
-        attrs?: Omit<ButtonProps, 'icon' | 'text' | 'type'>
+        attrs?: Partial<Omit<ButtonProps, 'icon' | 'text' | 'type'>>
       }
   >
   // 表格工具栏右侧图标
@@ -116,18 +119,18 @@ export interface ProTableProps<Q = any, I extends DefaultRow = any, Extra = IObj
         icon: string
         text?: string
         auth?: string
-        attrs?: Omit<ButtonProps, 'icon' | 'text' | 'circle'>
+        attrs?: Partial<Omit<ButtonProps, 'icon' | 'text' | 'circle'>>
       }
   >
-  toolbarMiddle?: VNodeChild | Component // 表格工具栏中间内容
-  columns: ColumnProps<I>[] // 列配置项  ==> 必传
-  data?: I[] // 静态 table data 数据，若存在则不会使用 requestApi 返回的 data ==> 非必传
-  requestApi: (_params: Q & Extra) => Promise<ResultPage<I>> // 请求表格数据的 api ==> 非必传
+  toolbarMiddle?: () => VNodeChild | Component | JSX.Element | JSX.Element[] // 表格工具栏中间内容
+  columns: ColumnProps<Item>[] // 列配置项  ==> 必传
+  pagination?: ProTablePaginationEnum // 是否需要分页组件 ==> 非必传（默认为1）
+  fePaginationFilterMethod?: (_query: IObject) => IObject[] // 前端分页过滤方法 ==> 非必传
+  requestApi: (_params: Query & ExtraQuery) => Promise<ResultPage<Item>> | Promise<Item[]> // 请求表格数据的 api ==> 非必传
   requestAuto?: boolean // 是否自动执行请求 api ==> 非必传（默认为true）
-  dataCallback?: (_data: I[]) => IObject[] // 返回数据的回调函数，可以对数据进行处理 ==> 非必传
+  dataCallback?: (_data: Item[]) => IObject[] // 返回数据的回调函数，可以对数据进行处理 ==> 非必传
   title?: string // 表格标题 ==> 非必传
-  pagination?: boolean // 是否需要分页组件 ==> 非必传（默认为true）
-  initParam?: Partial<Q> // 初始化请求参数 ==> 非必传（默认为{}）
+  initParam?: Partial<Query> // 初始化请求参数 ==> 非必传（默认为{}）
   border?: boolean // 是否带有纵向边框 ==> 非必传（默认为true）
   rowKey?: string // 行数据的 Key，用来优化 Table 的渲染，当表格数据多选时，所指定的 id ==> 非必传（默认为 id）
   searchCol?: number | Record<BreakPoint, number> // 表格搜索项 每列占比配置 ==> 非必传 { xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }

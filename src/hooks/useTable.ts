@@ -1,12 +1,15 @@
 import { reactive, toRefs } from 'vue'
 import { DEFAULT_PAGE_SIZE } from '@/constants/proTable'
+import { ProTablePaginationEnum } from '@/enums'
+import type { ComposerTranslation } from 'vue-i18n'
+
 export interface Pageable {
   pageNum: number
   pageSize: number
   total: number
 }
-export interface StateProps {
-  tableData: any[]
+export interface StateProps<T> {
+  tableData: (T & IObject)[]
   pageable: Pageable
   searchParam: IObject
   searchInitParam: IObject
@@ -14,24 +17,25 @@ export interface StateProps {
   icon?: IObject
 }
 
-/**
- * @description table 页面操作方法封装
- * @param {Function} api 获取表格数据 api 方法 (必传)
- * @param {Object} initParam 获取数据初始化参数 (非必传，默认为{})
- * @param {Boolean} isPageable 是否有分页 (非必传，默认为true)
- * @param {Function} dataCallBack 对后台返回的数据进行处理的方法 (非必传)
- * */
-export const useTable = <
-  RequestT,
-  ResponseT extends { list: TableItem[]; total: number } | TableItem[],
-  TableItem = any,
->(
-  api: (_params: RequestT) => Promise<ResponseT>,
-  _initParam: object = {},
-  isPageable: boolean = true,
+// 重载1
+export function useTable<TableItem>(
+  _api: (_params: IObject) => Promise<ResultPage<TableItem>> | Promise<TableItem[]>,
+  _initParam: object,
+  _pagination: ProTablePaginationEnum,
+  _t: ComposerTranslation,
+  _fePaginationFilterMethod?: (_query: IObject) => IObject[],
+  _dataCallBack?: (_data: TableItem[]) => IObject[]
+): any
+
+export function useTable<TableItem>(
+  api: (_params: IObject) => Promise<ResultPage<TableItem>> | Promise<TableItem[]>,
+  initParam: object = {},
+  pagination: ProTablePaginationEnum = ProTablePaginationEnum.BE,
+  t: ComposerTranslation,
+  fePaginationFilterMethod?: (_query: IObject) => IObject[],
   dataCallBack?: (_data: TableItem[]) => IObject[]
-) => {
-  const state = reactive<StateProps>({
+) {
+  const state = reactive<StateProps<TableItem>>({
     // 表格数据
     tableData: [],
     // 分页数据
@@ -55,19 +59,46 @@ export const useTable = <
    * @description 获取表格数据
    * @return void
    * */
-  const getTableList = async (resetPageSize: boolean = false) => {
+  const getTableList = async () => {
     try {
       // 先把初始化参数和分页参数放到总参数里面
-      state.totalParam = { ...state.totalParam, ..._initParam, pageNum: 1 }
-      if (resetPageSize) {
-        state.pageable.pageSize = DEFAULT_PAGE_SIZE
+      Object.assign(
+        state.totalParam,
+        initParam,
+        pagination !== ProTablePaginationEnum.NONE
+          ? { pageNum: state.pageable.pageNum, pageSize: state.pageable.pageSize }
+          : {}
+      )
+
+      const data = await api({ ...state.searchInitParam, ...state.totalParam })
+      let listData: TableItem[] | IObject[] = []
+      if (pagination === ProTablePaginationEnum.BE) {
+        if (Array.isArray((data as ResultPage<TableItem>).list)) {
+          listData = (data as ResultPage<TableItem>).list
+        } else {
+          throw new Error(t('error.tableDataShouldBeArray'))
+        }
+        state.pageable.total = (data as ResultPage<TableItem>).total
+      } else {
+        if (Array.isArray(data)) {
+          listData = data
+        } else {
+          throw new Error(t('error.tableDataShouldBeArray'))
+        }
       }
-      // todo 这里不用 as RequestT，更优雅一些
-      const data = await api({ ...state.searchInitParam, ...state.totalParam } as RequestT)
-      const listData: TableItem[] = isPageable ? (data as { list: TableItem[] }).list : (data as TableItem[])
-      state.pageable.total = isPageable ? (data as { total: number }).total : 0
-      state.tableData = dataCallBack ? dataCallBack(listData) : (listData as TableItem[])
-      // 解构后台返回的分页数据 (如果有分页更新分页信息)
+
+      if (pagination === ProTablePaginationEnum.FE) {
+        if (!fePaginationFilterMethod) {
+          throw new Error(t('error.fePaginationFilterMethodIsRequired'))
+        }
+        const { pageNum, pageSize, ...rest } = state.totalParam
+        const queryKeys = Object.keys(rest)
+        const filterData = queryKeys.length ? fePaginationFilterMethod(rest) : (data as TableItem[])
+        listData = filterData.slice((pageNum - 1) * pageSize, pageNum * pageSize)
+        state.pageable.total = queryKeys.length ? filterData.length : (data as TableItem[]).length
+      }
+      // @ts-expect-error 类型不兼容
+      state.tableData = dataCallBack ? dataCallBack(listData) : listData
     } catch (error) {
       throw new Error(error as any)
     }
@@ -80,7 +111,7 @@ export const useTable = <
   const updatedTotalParam = () => {
     state.totalParam = {}
     // 处理查询参数，可以给查询参数加自定义前缀操作
-    const nowSearchParam: StateProps['searchParam'] = {}
+    const nowSearchParam: StateProps<TableItem>['searchParam'] = {}
     // 防止手动清空输入框携带参数（这里可以自定义查询参数前缀）
     for (const key in state.searchParam) {
       // 某些情况下参数为 false/0 也应该携带参数
@@ -109,8 +140,9 @@ export const useTable = <
     state.pageable.pageNum = 1
     // 重置搜索表单的时，如果有默认搜索参数，则重置默认的搜索参数
     state.searchParam = { ...state.searchInitParam }
+    state.pageable.pageSize = DEFAULT_PAGE_SIZE
     updatedTotalParam()
-    getTableList(true)
+    getTableList()
   }
 
   /**
