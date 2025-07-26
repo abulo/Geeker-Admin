@@ -1,5 +1,4 @@
 import http from '@/utils/request/geeker'
-import { SERVER_ENDPOINTS } from '@/constants'
 
 export interface ReqUserParams extends RequestPage {
   username: string
@@ -50,66 +49,66 @@ export interface ResRole {
 export const UserAPI = {
   // 获取用户列表
   getUserList: (params: ReqUserParams) => {
-    return http.post<ResultPage<ResUserList>>(SERVER_ENDPOINTS.geeker + `/user/list`, params)
+    return http.post<ResultPage<ResUserList>>(`/user/list`, params)
   },
 
   // 获取树形用户列表
   getUserTreeList: (params: ReqUserParams) => {
-    return http.post<ResultPage<ResUserList>>(SERVER_ENDPOINTS.geeker + `/user/tree/list`, params)
+    return http.post<ResultPage<ResUserList>>(`/user/tree/list`, params)
   },
 
   // 新增用户
   addUser: (params: { id: string }) => {
-    return http.post(SERVER_ENDPOINTS.geeker + `/user/add`, params)
+    return http.post(`/user/add`, params)
   },
 
   // 批量添加用户
   batchAddUser: (params: FormData) => {
-    return http.post(SERVER_ENDPOINTS.geeker + `/user/import`, params)
+    return http.post(`/user/import`, params)
   },
 
   // 编辑用户
   editUser: (params: { id: string }) => {
-    return http.post(SERVER_ENDPOINTS.geeker + `/user/edit`, params)
+    return http.post(`/user/edit`, params)
   },
 
   // 删除用户
   deleteUser: (params: { id: string[] }) => {
-    return http.post(SERVER_ENDPOINTS.geeker + `/user/delete`, params)
+    return http.post(`/user/delete`, params)
   },
 
   // 切换用户状态
   changeUserStatus: (params: { id: string; status: number }) => {
-    return http.post(SERVER_ENDPOINTS.geeker + `/user/change`, params)
+    return http.post(`/user/change`, params)
   },
 
   // 重置用户密码
   resetUserPassWord: (params: { id: string }) => {
-    return http.post(SERVER_ENDPOINTS.geeker + `/user/rest_password`, params)
+    return http.post(`/user/rest_password`, params)
   },
 
   // 导出用户数据
   exportUserInfo: (params: ReqUserParams) => {
-    return http.download(SERVER_ENDPOINTS.geeker + `/user/export`, params)
+    return http.download(`/user/export`, params)
   },
 
   // 获取用户状态字典
   getUserStatus: () => {
-    return http.get<ResStatus[]>(SERVER_ENDPOINTS.geeker + `/user/status`)
+    return http.get<ResStatus[]>(`/user/status`)
   },
 
   // 获取用户性别字典
   getUserGender: () => {
-    return http.get<ResGender[]>(SERVER_ENDPOINTS.geeker + `/user/gender`)
+    return http.get<ResGender[]>(`/user/gender`)
   },
 
   // 获取用户部门列表
   getUserDepartment: () => {
-    return http.get<ResDepartment[]>(SERVER_ENDPOINTS.geeker + `/user/department`, {}, { cancel: false })
+    return http.get<ResDepartment[]>(`/user/department`, {}, { cancel: false })
   },
 
   // 获取用户角色字典
   getUserRole: () => {
-    return http.get<ResRole[]>(SERVER_ENDPOINTS.geeker + `/user/role`)
+    return http.get<ResRole[]>(`/user/role`)
   },
 }

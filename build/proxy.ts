@@ -21,7 +21,9 @@ export function createProxy(list: ProxyList = []) {
       changeOrigin: true,
       ws: true,
       rewrite: path => {
-        if (path.startsWith('/geeker')) return path
+        if (path.startsWith('/geeker')) {
+          return path
+        }
         return path.replace(new RegExp(`^${prefix}`), '')
       },
       // https is require secure=false

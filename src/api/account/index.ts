@@ -1,5 +1,4 @@
 import http from '@/utils/request'
-import { SERVER_ENDPOINTS } from '@/constants'
 
 interface UserInfo {
   id: string
@@ -27,10 +26,7 @@ interface MenuOptions {
   children?: MenuOptions[]
 }
 export const AccountAPI = {
-  getUserInfo: () =>
-    http.get<UserInfo>(SERVER_ENDPOINTS.api + `/user/info?userCode=${localStorage.getItem('userCode')}`),
-  getUserMenu: () =>
-    http.get<MenuOptions[]>(SERVER_ENDPOINTS.api + `/user/menu?userCode=${localStorage.getItem('userCode')}`),
-  getUserButtons: () =>
-    http.get<ResAuthButtons>(SERVER_ENDPOINTS.api + `/user/buttons?userCode=${localStorage.getItem('userCode')}`),
+  getUserInfo: () => http.get<UserInfo>(`/user/info?userCode=${localStorage.getItem('userCode')}`),
+  getUserMenu: () => http.get<MenuOptions[]>(`/user/menu?userCode=${localStorage.getItem('userCode')}`),
+  getUserButtons: () => http.get<ResAuthButtons>(`/user/buttons?userCode=${localStorage.getItem('userCode')}`),
 }
