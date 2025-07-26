@@ -3,8 +3,8 @@
     <div class="card mb-2.5">
       <h4 class="title">简介</h4>
       <span class="text">
-        <el-link type="primary" href="https://maicss.com/geek-admin/" target="_blank">Geeker-Admin</el-link>
-        一款基于 Vue3.4、TypeScript、Vite5、Pinia、Element-Plus
+        <el-link type="primary" href="https://maicss.com/geeker-admin/" target="_blank">Geeker-Admin</el-link>
+        一款基于 Vue3.5、TypeScript、Vite7、Pinia、Element-Plus
         开源的后台管理框架，使用目前最新技术栈开发。项目提供强大的
         <el-link type="primary" href="https://juejin.cn/post/7166068828202336263" target="_blank"
           >ProTable 组件</el-link
@@ -25,10 +25,10 @@
           <el-link type="primary" href="https://github.com/Geeker-Admin/Geeker-Admin" target="_blank"> Github </el-link>
         </el-descriptions-item>
         <el-descriptions-item label="文档地址" label-align="left">
-          <el-link type="primary" href="https://maicss.com/geek-admin/" target="_blank"> 文档地址 </el-link>
+          <el-link type="primary" href="https://maicss.com/geeker-admin/" target="_blank"> 文档地址 </el-link>
         </el-descriptions-item>
         <el-descriptions-item label="预览地址" label-align="left">
-          <el-link type="primary" href="https://geek-admin.maicss.com/" target="_blank"> 预览地址 </el-link>
+          <el-link type="primary" href="https://geeker-admin.maicss.com/" target="_blank"> 预览地址 </el-link>
         </el-descriptions-item>
       </el-descriptions>
     </div>

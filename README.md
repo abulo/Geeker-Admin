@@ -6,11 +6,11 @@
 
 ### 介绍 📖
 
-Geeker-Admin 一款基于 Vue3.4、TypeScript、Vite5、Pinia、Element-Plus 开源的后台管理框架，使用目前最新技术栈开发。项目提供强大的 [ProTable](https://juejin.cn/post/7166068828202336263) 组件，在一定程度上提高您的开发效率。另外本项目还封装了一些常用组件、Hooks、指令、动态路由、按钮级别权限控制等功能。
+Geeker-Admin 一款基于 Vue3.5、TypeScript、Vite7、Pinia、Element-Plus 开源的后台管理框架，使用目前最新技术栈开发。项目提供强大的 [ProTable](https://juejin.cn/post/7166068828202336263) 组件，在一定程度上提高您的开发效率。另外本项目还封装了一些常用组件、Hooks、指令、动态路由、按钮级别权限控制等功能。
 
 ### 在线预览 👀
 
-- Link：https://admin.spicyboy.cn
+- Link：https://geeker-admin.maicss.com
 
 ### 代码仓库 ⭐
 
@@ -20,12 +20,12 @@ Geeker-Admin 一款基于 Vue3.4、TypeScript、Vite5、Pinia、Element-Plus 开
 
 - 项目更新日志：[CHANGELOG.md](./CHANGELOG.md)
 
-- 项目文档地址：https://docs.spicyboy.cn
+- 项目文档地址：https://maicss.com/geeker-admin/
 
 ### 项目功能 🔨
 
-- 使用 Vue3.4 + TypeScript 开发，单文件组件**＜script setup＞**
-- 采用 Vite5 作为项目开发、打包工具（配置 gzip/brotli 打包、tsx 语法、跨域代理…）
+- 使用 Vue3.5 + TypeScript 开发，单文件组件**＜script setup＞**
+- 采用 Vite7 作为项目开发、打包工具（配置 gzip/brotli 打包、tsx 语法、跨域代理…）
 - 使用 Pinia 替代 Vuex，轻量、简单、易用，集成 Pinia 持久化插件
 - 使用 TypeScript 对 Axios 整个二次封装（请求拦截、取消、常用请求封装…）
 - 基于 Element 二次封装 [ProTable](https://juejin.cn/post/7166068828202336263) 组件，表格页面全部为配置项 Columns
@@ -186,3 +186,4 @@ Geeker-Admin
 
 - FastMock： https://www.fastmock.site
 - EasyMock：https://mock.mengxuegu.com
+- 新版准备迁移到 apifox
