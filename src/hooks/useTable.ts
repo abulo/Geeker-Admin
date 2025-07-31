@@ -126,7 +126,7 @@ export function useTable<TableItem>(
   const search = () => {
     state.pageable.pageNum = 1
     updatedTotalParam()
-    getTableList()
+    void getTableList()
   }
 
   /**
@@ -139,7 +139,7 @@ export function useTable<TableItem>(
     state.searchParam = { ...state.searchInitParam }
     state.pageable.pageSize = DEFAULT_PAGE_SIZE
     updatedTotalParam()
-    getTableList()
+    void getTableList()
   }
 
   /**
@@ -150,7 +150,7 @@ export function useTable<TableItem>(
   const handleSizeChange = (val: number) => {
     state.pageable.pageNum = 1
     state.pageable.pageSize = val
-    getTableList()
+    void getTableList()
   }
 
   /**
@@ -160,7 +160,7 @@ export function useTable<TableItem>(
    * */
   const handleCurrentChange = (val: number) => {
     state.pageable.pageNum = val
-    getTableList()
+    void getTableList()
   }
 
   return {
