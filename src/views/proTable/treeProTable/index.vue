@@ -115,7 +115,7 @@ const columns = reactive<ColumnProps<ResUserList>[]>([
     enum: filterGenderEnum,
     search: {
       el: 'select',
-      props: {
+      attrs: {
         placeholder: '请输入性别查询',
         filterable: true,
         remote: true,

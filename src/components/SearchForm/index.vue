@@ -13,7 +13,7 @@
               </el-space>
               <span>&nbsp;:</span>
             </template>
-            <search-form-item :column="item" :search-param="searchParam" />
+            <search-form-item :column="item" :search-param="searchParam" :attrs="item.search?.attrs" />
           </el-form-item>
         </grid-item>
         <grid-item suffix>
