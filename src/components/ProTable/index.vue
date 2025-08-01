@@ -22,7 +22,7 @@
             :icon="item.icon"
             :type="item.type"
             :auth="item.auth"
-            :loading="loading"
+            :loading="loadingStore.loading"
             v-bind="item.attrs"
             @click="handleToolbarClick(item.name)"
           >
@@ -47,7 +47,7 @@
             :icon="item.icon"
             :auth="item.auth"
             :title="item.text"
-            :loading="loading"
+            :loading="loadingStore.loading"
             circle
             @click="handleToolbarClick(item.name)"
           />
@@ -151,6 +151,7 @@ import { toolbarButtonsConfig } from '@/utils/proTable'
 import { Operation } from '@element-plus/icons-vue'
 import { ProTablePaginationEnum } from '@/enums'
 import { useI18n } from 'vue-i18n'
+import { useLoadingStore } from '@/stores/modules/loading'
 
 // 接受父组件参数，配置默认值
 const props = withDefaults(defineProps<ProTableProps>(), {
@@ -173,6 +174,9 @@ const columnTypes: TypeProps[] = ['selection', 'radio', 'index', 'expand', 'sort
 
 // 是否显示搜索模块
 const isShowSearch = ref(true)
+
+const loadingStore = useLoadingStore()
+
 const searchParamDefaultValuePromises: { key: string; promise: Promise<any> }[] = []
 
 const importModal = ref({
