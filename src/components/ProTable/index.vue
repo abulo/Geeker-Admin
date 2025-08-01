@@ -152,6 +152,7 @@ import { Operation } from '@element-plus/icons-vue'
 import { ProTablePaginationEnum } from '@/enums'
 import { useI18n } from 'vue-i18n'
 import { useLoadingStore } from '@/stores/modules/loading'
+import { TABLE_COLUMN_OPERATIONS_NAME } from '@/constants/proTable'
 
 // 接受父组件参数，配置默认值
 const props = withDefaults(defineProps<ProTableProps>(), {
@@ -386,7 +387,7 @@ const setSearchParamForm = (key: string, value: any) => {
 const colRef = ref()
 const colSetting = tableColumns.value.filter(item => {
   const { type, prop, isSetting } = item
-  return !columnTypes.includes(type!) && prop !== 'operation' && isSetting
+  return !columnTypes.includes(type!) && prop !== TABLE_COLUMN_OPERATIONS_NAME && isSetting
 })
 const openColSetting = () => colRef.value.openColSetting()
 
