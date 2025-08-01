@@ -30,7 +30,7 @@ const getSearchDefaultValue = new Promise(resolve => {
   loadingStore.setLoading(true)
   setTimeout(() => {
     loadingStore.setLoading(false)
-    ElMessage.success('获取查询条件成功，默认值为：张三123，调用列表接口获取数据，请稍后...')
+    ElMessage.success('获取查询条件成功，默认值为：张三123，调用列表接口获取数据，请稍等...')
     resolve('张三123')
   }, 5000)
 })
