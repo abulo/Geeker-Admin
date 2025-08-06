@@ -107,7 +107,7 @@ export default [
       'vue/html-closing-bracket-newline': 'off',
 
       // 一般规则
-      curly: ['error', 'all'],
+      curly: ['error', 'multi-line'],
       'no-console': ['error', { allow: ['error'] }],
       'no-debugger': 'error',
       'no-unused-vars': [
