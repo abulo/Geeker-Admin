@@ -70,6 +70,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       // reportCompressedSize: false,
       // 规定触发警告的 chunk 大小
       // chunkSizeWarningLimit: 2000,
+      chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
           // Static resource classification and packaging

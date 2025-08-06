@@ -41,11 +41,6 @@ export const cdn = importToCDN({
       path: 'axios.min.js',
     },
     {
-      name: 'dayjs',
-      var: 'dayjs',
-      path: 'dayjs.min.js',
-    },
-    {
       name: 'echarts',
       var: 'echarts',
       path: 'echarts.min.js',
