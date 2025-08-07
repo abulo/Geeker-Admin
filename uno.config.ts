@@ -14,7 +14,7 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import { readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-const iconsDir = './src/assets/icons/svg'
+const iconsDir = resolve(__dirname, './src/assets/icons/svg')
 
 // 全部加载本地图标，为了图标选择器使用，正式项目如果没有图标选择的需求，可以删除此部分代码，让组件做按需加载
 const generateLocalIconSafelist = () => {
