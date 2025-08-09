@@ -39,8 +39,7 @@
     "src/**/*.vue",
     "build/**/*.ts",
     "build/**/*.d.ts",
-    "vite.config.ts",
-    "uno.config.ts"
+    "vite.config.ts"
   ],
   "exclude": ["node_modules", "dist", "**/*.js"]
 }
