@@ -1,8 +1,15 @@
 <template>
-  <el-icon v-if="iconType == 'ep'" :key="customKey" :class="className" :size="size">
+  <el-icon v-if="iconType == 'ep' && iconName" :key="customKey" :class="className" :size="size">
     <component :is="iconName" />
   </el-icon>
-  <icon-space v-if="iconType == 'ip'" :key="customKey" :class="className" :size="size" :type="iconName" tag="i" />
+  <icon-space
+    v-if="iconType == 'ip' && iconName"
+    :key="customKey"
+    :class="className"
+    :size="size"
+    :type="iconName"
+    tag="i"
+  />
 </template>
 <script lang="ts" setup>
 defineOptions({ name: 'Icon' })
@@ -32,7 +39,7 @@ const iconType = computed(() => {
   }
   return 'ep'
 }) // 图标类别
-// const iconType = computed(() => props.icon.substring(0, props.icon.indexOf(":"))); // 图标类别
+// const iconType = computed(() => props.icon.substring(0, props.icon.indexOf(':'))) // 图标类别
 const iconName = computed(() => toPascalCase(props.icon.substring(props.icon.indexOf(':') + 1))) // 图标名称
 const customKey = computed(() => (props.customKey ? props.customKey : props.icon)) // 图标 key
 const className = computed(() => props.class) // 图标样式
