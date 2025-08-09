@@ -431,3 +431,20 @@ export async function encryptPassword(password: string) {
   const hashedPassword = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
   return hashedPassword
 }
+
+export function toKebabCase(oldStr: any): string {
+  //先将 str 转换成 string 类型
+  const str = String(oldStr)
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1-$2') // 在小写字母和大写字母之间插入连字符
+    .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2') // 在连续大写字母和后续小写字母之间插入连字符
+    .toLowerCase() // 将所有字母转换为小写
+}
+
+export function toPascalCase(oldStr: any): string {
+  const str = String(oldStr)
+  return str
+    .split('-') // 按连字符分割字符串
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // 将每个单词的首字母大写，其他字母小写
+    .join('') // 将单词重新组合成一个字符串
+}

@@ -1,7 +1,8 @@
 <template>
   <div class="card content-box">
     <span class="text"> 图标选择器 🍓🍇🍈🍉</span>
-    <select-icon v-model:icon-value="iconValue" />
+    <select-icon v-model:icon-value="iconValue" title="请选择图标" placeholder="搜索图标" :show-icon-name="true" />
+    <!-- <SelectIcon v-model="systemMenuItemFrom.icon" title="请选择图标" placeholder="搜索图标" :show-icon-name="true" /> -->
     <el-descriptions title="配置项 📚" :column="1" border>
       <el-descriptions-item label="iconValue">
         双向绑定的icon值，使用示例：v-model:icon-value="iconValue"

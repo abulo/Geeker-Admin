@@ -45,7 +45,8 @@ const { modelValue, options, type, code, disabled, ...rest } = defineProps<DictP
 const loadingStore = useLoadingStore()
 
 const emit = defineEmits<{
-  (_e: 'update:modelValue', _value: string | number | boolean): void
+  // (_e: 'update:modelValue', _value: string | number | boolean): void
+  'update:modelValue': [value: string | number | boolean]
 }>()
 
 const localOptions = ref<SelectOption[]>([])

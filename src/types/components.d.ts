@@ -69,6 +69,7 @@ declare module 'vue' {
     ElWatermark: typeof import('element-plus/es')['ElWatermark']
     Grid: typeof import('./../components/Grid/index.vue')['default']
     GridItem: typeof import('./../components/Grid/components/GridItem.vue')['default']
+    Icon: typeof import('./../components/Icon/index.vue')['default']
     IconSelect: typeof import('./../components/ProTable/components/IconSelect.vue')['default']
     Img: typeof import('./../components/Upload/Img.vue')['default']
     Imgs: typeof import('./../components/Upload/Imgs.vue')['default']
