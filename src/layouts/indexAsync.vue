@@ -28,6 +28,7 @@ const LayoutComponents: Record<LayoutType, Component> = {
   classic: defineAsyncComponent(() => import('./LayoutClassic/index.vue')),
   transverse: defineAsyncComponent(() => import('./LayoutTransverse/index.vue')),
   columns: defineAsyncComponent(() => import('./LayoutColumns/index.vue')),
+  mixed: defineAsyncComponent(() => import('./LayoutMixed/index.vue')),
 }
 
 const globalStore = useGlobalStore()

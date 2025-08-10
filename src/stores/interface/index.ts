@@ -1,6 +1,6 @@
 import type { MenuOptions } from '@/api/system/menu'
 
-export type LayoutType = 'vertical' | 'classic' | 'transverse' | 'columns'
+export type LayoutType = 'vertical' | 'classic' | 'transverse' | 'columns' | 'mixed'
 
 export type AssemblySizeType = 'large' | 'default' | 'small'
 

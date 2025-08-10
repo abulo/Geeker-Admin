@@ -70,7 +70,8 @@ const handleClickMenu = (subItem: MenuOptions) => {
 }
 .vertical,
 .classic,
-.transverse {
+.transverse,
+.mixed {
   .el-menu-item {
     &.is-active {
       &::before {
