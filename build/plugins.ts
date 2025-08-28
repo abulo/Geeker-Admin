@@ -152,6 +152,9 @@ const createCompression = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
 const createVitePwa = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
   const { VITE_GLOB_APP_TITLE } = viteEnv
   return VitePWA({
+    workbox: {
+      maximumFileSizeToCacheInBytes: 3000000, // 设置为 3MB
+    },
     registerType: 'autoUpdate',
     manifest: {
       name: VITE_GLOB_APP_TITLE,
