@@ -44,6 +44,9 @@
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[vue]": {
+    "editor.defaultFormatter": null
+  },
   "cSpell.words": [
     "apng",
     "axios",
