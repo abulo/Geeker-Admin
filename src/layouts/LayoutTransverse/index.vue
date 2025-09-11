@@ -2,7 +2,7 @@
 <template>
   <el-container class="layout">
     <el-header>
-      <div class="logo flex justify-center items-center">
+      <div class="logo flex items-center justify-center">
         <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" />
         <span class="logo-text">{{ title }}</span>
       </div>

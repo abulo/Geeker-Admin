@@ -1,6 +1,6 @@
 <template>
   <div class="maximize" @click="exitMaximize">
-    <tdesign-fullscreen-exit class="cursor-pointer absolute top-1/2 left-1/5 color-white" />
+    <tdesign-fullscreen-exit class="color-white absolute top-1/2 left-1/5 cursor-pointer" />
   </div>
 </template>
 

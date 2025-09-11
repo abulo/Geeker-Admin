@@ -15,7 +15,7 @@
   <!-- 表格主体 -->
   <div class="card table-main">
     <!-- 表格头部 操作按钮 -->
-    <div class="table-header flex justify-between mb-2">
+    <div class="table-header mb-2 flex justify-between">
       <div class="header-button-left">
         <template v-for="item in toolbarLeftArr" :key="item.auth">
           <el-button

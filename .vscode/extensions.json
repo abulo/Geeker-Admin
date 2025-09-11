@@ -12,6 +12,10 @@
     "bradlc.vscode-tailwindcss",
     "lokalise.i18n-ally",
     "gruntfuggly.todo-tree",
-    "antfu.unocss"
+    "christian-kohler.path-intellisense",
+    "warmthsea.vscode-custom-code-color",
+    "vscode-icons-team.vscode-icons",
+    "davidanson.vscode-markdownlint",
+    "csstools.postcss",
   ]
 }

@@ -71,7 +71,7 @@ const getTableConfig = ({
         search: {
           render: ({ searchParam }) => {
             return (
-              <div class=" flex justify-center items-center">
+              <div class="flex items-center justify-center">
                 <ElInput modelValue={searchParam.minAge} placeholder="最小年龄" />
                 <span class="mr-2.5 ml-2.5">-</span>
                 <ElInput modelValue={searchParam.maxAge} placeholder="最大年龄" />

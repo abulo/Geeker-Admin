@@ -16,6 +16,11 @@ export default {
       files: ['**/*.{vue,html}'],
       customSyntax: 'postcss-html',
     },
+    {
+      files: ['*.scss', '**/*.scss'],
+      customSyntax: 'postcss-scss',
+      extends: ['stylelint-config-standard-scss', 'stylelint-config-recommended-vue/scss'],
+    },
   ],
   rules: {
     'function-url-quotes': 'always', // URL 的引号 "always(必须加上引号)"|"never(没有引号)"

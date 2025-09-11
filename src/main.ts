@@ -1,9 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-// unocss
-import 'uno.css'
 // CSS common style sheet
 import '@/styles/common.scss'
+import '@/styles/tailwind.css'
 // element css
 import 'element-plus/dist/index.css'
 // element dark css

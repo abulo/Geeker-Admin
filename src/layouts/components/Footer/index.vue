@@ -1,5 +1,5 @@
 <template>
-  <div class="footer flex justify-center items-center">
+  <div class="footer flex items-center justify-center">
     <a href="https://github.com/Geeker-Admin/Geeker-Admin" target="_blank">
       2022 © Geeker-Admin By Geeker Technology.
     </a>

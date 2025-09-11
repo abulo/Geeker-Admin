@@ -16,7 +16,7 @@
                     <span v-else>
                       {{ item.label }}
                       <el-tooltip v-if="item.tips" v-bind="getTooltipProps(item.tips)">
-                        <QuestionFilled class="w-4 h-4 mx-1" />
+                        <QuestionFilled class="mx-1 h-4 w-4" />
                       </el-tooltip>
                       <span v-if="modalConfig.colon">:</span>
                     </span>
@@ -85,7 +85,7 @@
                       <span v-else>
                         {{ item.label }}
                         <el-tooltip v-if="item?.tips" v-bind="getTooltipProps(item.tips)">
-                          <QuestionFilled class="w-4 h-4 mx-1" />
+                          <QuestionFilled class="mx-1 h-4 w-4" />
                         </el-tooltip>
                         <span v-if="modalConfig.colon">:</span>
                       </span>

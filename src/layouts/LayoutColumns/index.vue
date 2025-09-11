@@ -2,7 +2,7 @@
 <template>
   <ElContainer class="layout">
     <div class="aside-split">
-      <div class="logo flex justify-center items-center">
+      <div class="logo flex items-center justify-center">
         <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" />
       </div>
       <ElScrollbar>
@@ -23,7 +23,7 @@
       </ElScrollbar>
     </div>
     <ElAside :class="{ 'not-aside': !subMenuList.length }" :style="{ width: isCollapse ? '65px' : '210px' }">
-      <div class="logo flex justify-center items-center">
+      <div class="logo flex items-center justify-center">
         <span v-show="subMenuList.length" class="logo-text">{{ isCollapse ? 'G' : title }}</span>
       </div>
       <ElScrollbar>

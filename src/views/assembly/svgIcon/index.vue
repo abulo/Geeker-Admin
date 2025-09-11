@@ -18,15 +18,15 @@
       <local-svg-icon-drinking />
     </div>
     <div class="flex flex-wrap gap-2">
-      <local-svg-icon-earth class="w-10 h-10 animate-spin" />
-      <local-svg-icon-ship class="w-10 h-10" />
-      <local-svg-icon-car class="w-10 h-10" />
+      <local-svg-icon-earth class="h-10 w-10 animate-spin" />
+      <local-svg-icon-ship class="h-10 w-10" />
+      <local-svg-icon-car class="h-10 w-10" />
     </div>
     <el-divider content-position="center"> Iconify 图标 </el-divider>
     <div class="flex flex-wrap gap-2">
-      <IconAccessibility class="w-10 h-10 text-red-500" />
-      <IconAccountBox class="w-10 h-10 text-blue-500 hover:scale-110 transition-all duration-300 cursor-pointer" />
-      <svg-spinners-blocks-wave class="w-12 h-12" />
+      <IconAccessibility class="h-10 w-10 text-red-500" />
+      <IconAccountBox class="h-10 w-10 cursor-pointer text-blue-500 transition-all duration-300 hover:scale-110" />
+      <svg-spinners-blocks-wave class="h-12 w-12" />
     </div>
   </div>
 </template>

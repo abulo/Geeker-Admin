@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container flex justify-center items-center">
+  <div class="login-container flex items-center justify-center">
     <div class="login-box">
       <switch-dark class="dark" />
       <div class="login-left">

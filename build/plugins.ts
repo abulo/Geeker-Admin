@@ -9,7 +9,6 @@ import viteCompression from 'vite-plugin-compression'
 import NextDevTools from 'vite-plugin-vue-devtools'
 import { codeInspectorPlugin } from 'code-inspector-plugin'
 import devtoolsJson from 'vite-plugin-devtools-json'
-import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
@@ -17,6 +16,7 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import Icons from 'unplugin-icons/vite'
 import { cdn } from './cdn'
 const iconsDir = './src/assets/icons/svg'
+import tailwindcss from '@tailwindcss/vite'
 
 /**
  * 创建 vite 插件
@@ -25,11 +25,10 @@ const iconsDir = './src/assets/icons/svg'
 export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOption[])[] => {
   const { VITE_GLOB_APP_TITLE, VITE_REPORT, VITE_DEVTOOLS, VITE_PWA, VITE_CODE_INSPECTOR, VITE_CDN } = viteEnv
   return [
+    tailwindcss(),
     vue(),
     // vue 可以使用 jsx/tsx 语法
     vueJsx(),
-    // unocss
-    UnoCSS(),
     // chrome dev tools
     devtoolsJson(),
     // devTools

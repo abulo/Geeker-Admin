@@ -3,7 +3,7 @@
     <el-form
       :model="form"
       label-width="auto"
-      class="p-5 rounded-lg border border-dashed border-gray-500"
+      class="rounded-lg border border-dashed border-gray-500 p-5"
       label-position="top"
     >
       <el-form-item label="通过 options 传递数据">

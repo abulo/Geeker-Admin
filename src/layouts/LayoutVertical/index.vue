@@ -3,7 +3,7 @@
   <el-container class="layout">
     <el-aside>
       <div class="aside-box" :style="{ width: isCollapse ? '65px' : '210px' }">
-        <div class="logo flex justify-center items-center">
+        <div class="logo flex items-center justify-center">
           <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" />
           <span v-show="!isCollapse" class="logo-text">{{ title }}</span>
         </div>
