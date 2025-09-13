@@ -67,10 +67,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       },
       sourcemap: process.env.NODE_ENV === 'development',
       // 禁用 gzip 压缩大小报告，可略微减少打包时间
-      // reportCompressedSize: false,
+      reportCompressedSize: false,
       // 规定触发警告的 chunk 大小
       // chunkSizeWarningLimit: 2000,
-      chunkSizeWarningLimit: 1000,
+      chunkSizeWarningLimit: 4000,
       rollupOptions: {
         output: {
           // Static resource classification and packaging
