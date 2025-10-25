@@ -63,6 +63,7 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
         // }),
       ],
       dts: 'src/types/components.d.ts',
+      dtsTsx: false,
     }),
     // 注入变量到 html 文件
     createHtmlPlugin({
