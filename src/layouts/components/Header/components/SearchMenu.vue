@@ -19,9 +19,10 @@
           @click="handleClickMenu()"
         >
           <div class="menu-lf">
-            <el-icon class="menu-icon">
+            <!-- <el-icon class="menu-icon">
               <component :is="item.meta.icon" />
-            </el-icon>
+            </el-icon> -->
+            <Icon class="menu-icon" :icon="item.meta.icon" :custom-key="item.path" />
             <span class="menu-title">{{ item.meta.customTitle }}</span>
           </div>
           <mi-enter class="menu-enter cursor-pointer" @click="handleOpen" />
@@ -42,7 +43,7 @@ import { Search } from '@element-plus/icons-vue'
 import { useAuthStore } from '@/stores/modules/auth'
 import { useRouter } from 'vue-router'
 import { useDebounceFn } from '@vueuse/core'
-import type { MenuOptions } from '@/api/system/menu'
+// import type { MenuOptions } from '@/api/system/menu'
 import HugeiconsSearch01 from '~icons/hugeicons/search-01?width=20px&height=20px'
 import MiEnter from '~icons/mi/enter?width=20px&height=20px'
 import { findParents } from '@/utils/index'

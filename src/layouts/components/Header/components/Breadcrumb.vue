@@ -8,9 +8,10 @@
             :class="{ 'item-no-icon': !item.meta.icon }"
             @click="onBreadcrumbClick(item, index)"
           >
-            <el-icon v-if="item.meta.icon && globalStore.breadcrumbIcon" class="breadcrumb-icon">
+            <!-- <el-icon v-if="item.meta.icon && globalStore.breadcrumbIcon" class="breadcrumb-icon">
               <component :is="item.meta.icon" />
-            </el-icon>
+            </el-icon> -->
+            <Icon v-if="item.meta.icon && globalStore.breadcrumbIcon" class="breadcrumb-icon" :icon="item.meta.icon" />
             <span class="breadcrumb-title">{{ item.meta.title }}</span>
           </div>
         </el-breadcrumb-item>
@@ -26,7 +27,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { ArrowRight } from '@element-plus/icons-vue'
 import { useAuthStore } from '@/stores/modules/auth'
 import { useGlobalStore } from '@/stores/modules/global'
-import type { MenuOptions } from '@/api/system/menu'
+// import type { MenuOptions } from '@/api/system/menu'
 
 const route = useRoute()
 const router = useRouter()

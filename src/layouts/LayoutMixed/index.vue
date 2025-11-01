@@ -25,9 +25,10 @@
         <ToolBarLeft />
         <el-menu mode="horizontal" :router="false" :default-active="activeHeaderMenu">
           <el-menu-item v-for="item in menuList" :key="item.path" :index="item.path" @click="changeSubMenu(item)">
-            <el-icon>
+            <!-- <el-icon>
               <component :is="item.meta.icon"></component>
-            </el-icon>
+            </el-icon> -->
+            <Icon :icon="item.meta.icon" />
             <template #title>
               <span>{{ item.meta.title }}</span>
             </template>
@@ -52,7 +53,7 @@ import Main from '@/layouts/components/Main/index.vue'
 import ToolBarLeft from '@/layouts/components/Header/ToolBarLeft.vue'
 import ToolBarRight from '@/layouts/components/Header/ToolBarRight.vue'
 import SubMenu from '@/layouts/components/Menu/SubMenu.vue'
-import type { MenuOptions } from '@/api/system/menu'
+// import type { MenuOptions } from '@/api/system/menu'
 const title = import.meta.env.VITE_GLOB_APP_TITLE
 const route = useRoute()
 const router = useRouter()
